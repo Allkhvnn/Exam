@@ -25,7 +25,9 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void updateAuthor(Long id, Author author) {
-        Author updated = authorRepository.findById(author.getId()).get();
+        Author updated = authorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Author not found"));
+
         updated.setName(author.getName());
         authorRepository.save(updated);
     }
