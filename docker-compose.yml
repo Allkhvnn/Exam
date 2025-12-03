@@ -1,0 +1,27 @@
+version: '3.1'
+
+services:
+  backend-service:
+    build: .
+    image: 'exam-spring-project'
+    container_name: 'exam-backend-container'
+    depends_on:
+      - database-service
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://database-service:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Alihan12
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - "8008:8008"
+
+  database-service:
+    image: 'postgres:15'
+    container_name: 'exam-database-container'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Alihan12
+      - POSTGRES_DB=postgres
+    ports:
+      - "2345:5432"
